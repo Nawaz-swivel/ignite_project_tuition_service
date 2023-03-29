@@ -1,0 +1,92 @@
+name: Deployment
+on:
+  push:
+    branches:
+      - production
+  pull_request:
+    branches:
+      - production
+jobs:
+  test:
+    name: Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Set up JDK
+        uses: actions/setup-java@v1
+        with:
+          java-version: '8'
+      - name: Cache maven packages
+        uses: actions/cache@v1
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2
+      - name: Run Tests
+        run: mvn clean compile -B test
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Set up JDK
+        uses: actions/setup-java@v1
+        with:
+          java-version: '8'
+      - name: Build with Maven
+        run: mvn clean compile -B package spring-boot:repackage --file pom.xml
+      - name: Upload JAR
+        uses: actions/upload-artifact@v2
+        with:
+          name: artifact
+          path: target/registration-0.0.1-SNAPSHOT.jar
+  scan:
+    needs: build
+    name: Sonar Analysis
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Set up JDK
+        uses: actions/setup-java@v1
+        with:
+          java-version: 11
+      - name: Cache Sonarcloud packages
+        uses: actions/cache@v1
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
+      - name: Cache Maven packages
+        uses: actions/cache@v1
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2
+      - name: Build and Analyze
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=Nawaz-swivel_ignite_project_registration_service -Dsonar.qualitygate.wait=true
+#  deploy:
+#    needs: scan
+#    name: Deploy
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: Download JAR
+#        uses: actions/download-artifact@v2
+#        with:
+#          name: artifact
+#      ## Deploy the artifact (JAR) into AWS Beanstalk
+#      - name: Deploy to EB
+#        uses: einaregilsson/beanstalk-deploy@v13
+#        with:
+#          aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#          aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+#          use_existing_version_if_available: false
+#          application_name: igniteregistration
+#          environment_name: Igniteregistration-env-1
+#          version_label: ${{github.SHA}}
+#          region: us-east-1
+#          deployment_package: registration-0.0.1-SNAPSHOT.jar
