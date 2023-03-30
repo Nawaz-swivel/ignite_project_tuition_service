@@ -38,6 +38,13 @@ security:
 oauth:
   resource-id: ${RESOURCE_ID:ignite_tuition}
 
+## logging level
+logging:
+  level:
+    com.swivel.ignite.tuition: ${LOG_LEVEL:DEBUG}
+  file:
+    path: ${LOGPATH:ec2 log path}
+
 ## Payment-Microservice
 payment:
   baseUrl: ${PAYMENT_BASE_URL:http://gateway_instance:8080/ignite-payment-service}
