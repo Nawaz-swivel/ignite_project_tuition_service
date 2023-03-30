@@ -31,7 +31,7 @@ public class CustomAccessDeniedHandler implements AccessDeniedHandler {
         map.put(STATUS, ERROR_STATUS);
         map.put(MESSAGE, exception.getMessage());
         map.put(DISPLAY_MESSAGE, ERROR_MESSAGE);
-        map.put(ERROR_CODE, 4099);
+        map.put(ERROR_CODE, HttpServletResponse.SC_UNAUTHORIZED);
 
         response.setContentType(APPLICATION_JSON);
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);

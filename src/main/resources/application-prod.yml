@@ -20,7 +20,7 @@ spring:
 ## eureka server configuration
 eureka:
   instance:
-      prefer-ip-address: true
+    prefer-ip-address: true
   client:
     service-url:
       defaultZone: ${EUREKA_SERVER_URL:http://discovery_instance:8761/eureka}
@@ -37,13 +37,6 @@ security:
 # oauth2 resource server configuration
 oauth:
   resource-id: ${RESOURCE_ID:ignite_tuition}
-
-# cors configuration
-accessControl:
-  allowedOrigin: ${ALLOWED_ORIGIN:*}
-  allowedMethods: ${ALLOWED_METHODS:GET, POST, PUT, PATCH, DELETE, OPTIONS}
-  maxAge: ${MAX_AGE:3600}
-  allowedHeaders: ${ALLOWED_HEADERS:*}
 
 ## Payment-Microservice
 payment:
