@@ -7,9 +7,9 @@ spring:
   application:
     name: ${APPLICATION_NAME:ignite-tuition-service}
   datasource:
-    url: jdbc:mysql://db_instance:db_port/ignite_tuition_db?createDatabaseIfNotExist=true
-    username: ${DB_USERNAME:db_username}
-    password: ${DB_PASSWORD:db_pwd}
+    url: jdbc:mysql://44.193.17.109:3306/ignite_tuition_db?createDatabaseIfNotExist=true
+    username: ${DB_USERNAME:user}
+    password: ${DB_PASSWORD:user}
     driver-class-name: com.mysql.cj.jdbc.Driver
     initialization-mode: always
   jpa:
@@ -23,13 +23,13 @@ eureka:
     prefer-ip-address: true
   client:
     service-url:
-      defaultZone: ${EUREKA_SERVER_URL:http://discovery_instance:8761/eureka}
+      defaultZone: ${EUREKA_SERVER_URL:http://44.211.175.160:8761/eureka}
 
 # oauth2 security configuration
 security:
   oauth2:
     resource:
-      token-info-uri: http://gateway_instance:8080/ignite-auth-service/oauth/check_token
+      token-info-uri: http://18.234.193.27:8080/ignite-auth-service/oauth/check_token
     client:
       client-id: ignite-client
       client-secret: 1234
@@ -43,16 +43,16 @@ logging:
   level:
     com.swivel.ignite.tuition: ${LOG_LEVEL:DEBUG}
   file:
-    path: ${LOGPATH:ec2 log path}
+    path: ${LOGPATH:/home/ubuntu/logs}
 
 ## Payment-Microservice
 payment:
-  baseUrl: ${PAYMENT_BASE_URL:http://gateway_instance:8080/ignite-payment-service}
+  baseUrl: ${PAYMENT_BASE_URL:http://18.234.193.27:8080/ignite-payment-service}
   deleteByTuitionIdUrl: /api/v1/payment/delete/all/tuition/{tuitionId}
 
 ## Student-Microservice
 student:
-  baseUrl: ${STUDENT_BASE_URL:http://gateway_instance:8080/ignite-student-service}
+  baseUrl: ${STUDENT_BASE_URL:http://18.234.193.27:8080/ignite-student-service}
   findByIdUrl: /api/v1/student/get/{studentId}
   addTuitionToStudentUrl: /api/v1/student/add/student/{studentId}/tuition/{tuitionId}
   removeTuitionFromStudentUrl: /api/v1/student/remove/student/{studentId}/tuition/{tuitionId}

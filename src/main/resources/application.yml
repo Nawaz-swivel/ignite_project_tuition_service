@@ -17,8 +17,8 @@ spring:
     hibernate:
       ddl-auto: update
   ## configure active profiles
-#  profiles:
-#    active: prod
+  profiles:
+    active: prod
 
 ## eureka server configuration
 eureka:
