@@ -2,8 +2,6 @@ package com.swivel.ignite.tuition;
 
 import org.springframework.boot.test.context.SpringBootTest;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 /**
  * This class tests {@link TuitionApplication} class
  */
@@ -15,7 +13,7 @@ class TuitionApplicationTests {
      */
 //    @Test
 //    void Should_RunSpringApplication() {
-//        RegistrationApplication.main(new String[]{});
+//        TuitionApplication.main(new String[]{});
 //
 //        assertTrue(true, "Spring Application Context Loaded Successfully");
 //    }
