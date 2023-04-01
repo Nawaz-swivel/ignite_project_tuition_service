@@ -31,6 +31,8 @@ public class StudentService {
     private static final String FAILED_TO_GET_STUDENT_BY_ID = "Failed to get student by studentId";
     private static final String FAILED_TO_ADD_TUITION_TO_STUDENT = "Failed to add tuition to student";
     private static final String FAILED_TO_REMOVE_TUITION_FROM_STUDENT = "Failed to remove tuition from student";
+    private static final String STUDENT_ID = "studentId";
+    private static final String TUITION_ID = "tuitionId";
     private final RestTemplate restTemplate;
     private final String getFindByIdUrl;
     private final String getAddTuitionToStudentUrl;
@@ -56,7 +58,7 @@ public class StudentService {
      */
     public StudentResponseDto findById(String studentId, String token) throws IOException {
         Map<String, String> uriParam = new HashMap<>();
-        uriParam.put("studentId", studentId);
+        uriParam.put(STUDENT_ID, studentId);
         UriComponents builder = UriComponentsBuilder.fromHttpUrl(getFindByIdUrl).build();
         HttpHeaders headers = new HttpHeaders();
         headers.set(AUTH_HEADER, token);
@@ -85,8 +87,8 @@ public class StudentService {
      */
     public void addTuition(String studentId, String tuitionId, String token) throws IOException {
         Map<String, String> uriParam = new HashMap<>();
-        uriParam.put("studentId", studentId);
-        uriParam.put("tuitionId", tuitionId);
+        uriParam.put(STUDENT_ID, studentId);
+        uriParam.put(TUITION_ID, tuitionId);
         UriComponents builder = UriComponentsBuilder.fromHttpUrl(getAddTuitionToStudentUrl).build();
         HttpHeaders headers = new HttpHeaders();
         headers.set(AUTH_HEADER, token);
@@ -112,8 +114,8 @@ public class StudentService {
      */
     public void removeTuition(String studentId, String tuitionId, String token) throws IOException {
         Map<String, String> uriParam = new HashMap<>();
-        uriParam.put("studentId", studentId);
-        uriParam.put("tuitionId", tuitionId);
+        uriParam.put(STUDENT_ID, studentId);
+        uriParam.put(TUITION_ID, tuitionId);
         UriComponents builder = UriComponentsBuilder.fromHttpUrl(getRemoveTuitionFromStudentUrl).build();
         HttpHeaders headers = new HttpHeaders();
         headers.set(AUTH_HEADER, token);

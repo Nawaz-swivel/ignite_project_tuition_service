@@ -20,38 +20,33 @@ import java.util.List;
 @EnableSwagger2
 public class SwaggerConfig {
 
+    private static final String AUTH_HEADER = "Authorization";
+    private static final String STRING_PARAMETER_MODEL = "string";
+    private static final String HEADER_PARAMETER = "header";
 
     @Bean
     public Docket api() {
-        //Adding Header
         ParameterBuilder aParameterBuilder = new ParameterBuilder();
-        List<Parameter> aParameters = new ArrayList<Parameter>();
-
+        List<Parameter> aParameters = new ArrayList<>();
         aParameters.clear();
-
-        aParameterBuilder.name("Authorization").modelRef(new ModelRef("string")).parameterType("header")
-                .required(false).build();
+        aParameterBuilder.name(AUTH_HEADER).modelRef(new ModelRef(STRING_PARAMETER_MODEL))
+                .parameterType(HEADER_PARAMETER).required(false).build();
         aParameters.add(aParameterBuilder.build());
 
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(generateAPIInfo())
                 .select()
-                //Here adding base package to scan controllers. This will scan only controllers inside
-                //specific package and include in the swagger documentation
                 .apis(RequestHandlerSelectors.basePackage("com.swivel.ignite.tuition"))
                 .paths(PathSelectors.any())
                 .build()
-//                .ignoredParameterTypes(HeaderVo.class)
                 .globalOperationParameters(aParameters);
     }
 
-    //Api information
     private ApiInfo generateAPIInfo() {
-        return new ApiInfo("Ignite Tuition Service", "Implementing Swagger with SpringBoot Application", "1.0.0",
-                "", getContacts(), "", "", new ArrayList<>());
+        return new ApiInfo("Ignite Tuition Service", "Implementing Swagger with SpringBoot Application",
+                "1.0.0", "", getContacts(), "", "", new ArrayList<>());
     }
 
-    // Developer Contacts
     private Contact getContacts() {
         return new Contact("Mohamed Nawaz", "", "nawas@swivelgroup.com.au");
     }
