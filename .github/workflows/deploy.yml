@@ -74,4 +74,4 @@ jobs:
       - name: Build with Maven
         run: mvn -B package spring-boot:repackage --file pom.xml
       - name: Execute Jar File
-        run: sudo kill -9 `sudo lsof -t -i:8082` & sudo java -jar /home/ubuntu/actions-runner/_work/ignite_project_tuition_service/ignite_project_tuition_service/target/tuition-0.0.1-SNAPSHOT.jar &
+        run: sudo rm -r actions-runner/_work/ignite_project_tuition_service/ignite_project_tuition_service/LOG_PATH_IS_UNDEFINED/springAppName_IS_UNDEFINED sudo kill -9 `sudo lsof -t -i:8082` & sudo java -jar /home/ubuntu/actions-runner/_work/ignite_project_tuition_service/ignite_project_tuition_service/target/tuition-0.0.1-SNAPSHOT.jar &
