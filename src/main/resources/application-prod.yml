@@ -7,7 +7,7 @@ spring:
   application:
     name: ${APPLICATION_NAME:ignite-tuition-service}
   datasource:
-    url: jdbc:mysql://107.23.77.51:3306/ignite_tuition_db?createDatabaseIfNotExist=true
+    url: jdbc:mysql://3.80.9.60:3306/ignite_tuition_db?createDatabaseIfNotExist=true
     username: ${DB_USERNAME:user}
     password: ${DB_PASSWORD:user}
     driver-class-name: com.mysql.cj.jdbc.Driver
