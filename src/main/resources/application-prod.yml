@@ -7,7 +7,7 @@ spring:
   application:
     name: ${APPLICATION_NAME:ignite-tuition-service}
   datasource:
-    url: jdbc:mysql://34.205.4.223:3306/ignite_tuition_db?createDatabaseIfNotExist=true
+    url: jdbc:mysql://44.195.68.180:3306/ignite_tuition_db?createDatabaseIfNotExist=true
     username: ${DB_USERNAME:user}
     password: ${DB_PASSWORD:user}
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -43,7 +43,7 @@ logging:
   level:
     com.swivel.ignite.tuition: ${LOG_LEVEL:DEBUG}
   file:
-    path: ${LOGPATH:/home/ubuntu/logs}
+    path: ${LOGPATH:/home/ubuntu}
 
 ## Payment-Microservice
 payment:
