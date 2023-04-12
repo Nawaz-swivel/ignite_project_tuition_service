@@ -4,8 +4,8 @@ This is the tuition microservice for the Ignite project backend.
 
 ## Requirements
 
-* Spring boot 2.1.3
-* Open JDK 8
+* Spring boot 2.3.12
+* Java 11
 * MySQL 8.0.29
 * Maven 3.8.6 (only to run maven commands)
 
