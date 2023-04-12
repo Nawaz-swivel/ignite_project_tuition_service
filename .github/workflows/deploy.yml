@@ -21,7 +21,7 @@ jobs:
       - name: Set up JDK
         uses: actions/setup-java@v1
         with:
-          java-version: '8'
+          java-version: '11'
       - name: Cache maven packages
         uses: actions/cache@v1
         with:
@@ -67,10 +67,10 @@ jobs:
 #      - name: Clean up leftover files
 #        run: sudo chown -R $USER:$USER /home/ubuntu/actions-runner/_work/ignite_project_tuition_service/ignite_project_tuition_service/LOG_PATH_IS_UNDEFINED
       - uses: actions/checkout@v3
-      - name: Set up JDK 8
+      - name: Set up JDK 11
         uses: actions/setup-java@v3
         with:
-          java-version: '8'
+          java-version: '11'
           distribution: 'temurin'
           cache: maven
       - name: Build with Maven
