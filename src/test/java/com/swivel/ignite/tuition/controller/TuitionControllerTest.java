@@ -59,7 +59,9 @@ class TuitionControllerTest {
     void setUp() {
         initMocks(this);
         TuitionController tuitionController = new TuitionController(tuitionService, studentService);
-        mockMvc = MockMvcBuilders.standaloneSetup(tuitionController).build();
+        mockMvc = MockMvcBuilders.standaloneSetup(tuitionController)
+                .setControllerAdvice(new CustomizedExceptionHandling())
+                .build();
     }
 
     /**
@@ -74,7 +76,7 @@ class TuitionControllerTest {
                         .content(getSampleTuitionCreateRequestDto().toJson())
                         .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(jsonPath("$.status").value(SUCCESS_STATUS))
                 .andExpect(jsonPath("$.message").value(SuccessResponseStatusType.CREATE_TUITION.getMessage()))
                 .andExpect(jsonPath("$.statusCode").value(SuccessResponseStatusType.CREATE_TUITION.getCode()))
@@ -92,7 +94,7 @@ class TuitionControllerTest {
                         .content(dto.toJson())
                         .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(jsonPath("$.status").value(ERROR_STATUS))
                 .andExpect(jsonPath("$.message").value(ErrorResponseStatusType.MISSING_REQUIRED_FIELDS
                         .getMessage()))
@@ -109,7 +111,7 @@ class TuitionControllerTest {
                         .content(getSampleTuitionCreateRequestDto().toJson())
                         .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(jsonPath("$.status").value(ERROR_STATUS))
                 .andExpect(jsonPath("$.message").value(ErrorResponseStatusType.TUITION_ALREADY_EXISTS
                         .getMessage()))
@@ -126,7 +128,7 @@ class TuitionControllerTest {
                         .content(getSampleTuitionCreateRequestDto().toJson())
                         .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isInternalServerError())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(jsonPath("$.status").value(ERROR_STATUS))
                 .andExpect(jsonPath("$.message").value(ErrorResponseStatusType.INTERNAL_SERVER_ERROR
                         .getMessage()))
@@ -147,7 +149,7 @@ class TuitionControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.get(uri)
                         .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(jsonPath("$.status").value(SUCCESS_STATUS))
                 .andExpect(jsonPath("$.message").value(SuccessResponseStatusType.READ_TUITION.getMessage()))
                 .andExpect(jsonPath("$.statusCode").value(SuccessResponseStatusType.READ_TUITION.getCode()))
@@ -163,7 +165,7 @@ class TuitionControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.get(uri)
                         .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(jsonPath("$.status").value(ERROR_STATUS))
                 .andExpect(jsonPath("$.message").value(ErrorResponseStatusType.TUITION_NOT_FOUND.getMessage()))
                 .andExpect(jsonPath("$.errorCode").value(ErrorResponseStatusType.TUITION_NOT_FOUND.getCode()))
@@ -178,7 +180,7 @@ class TuitionControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.get(uri)
                         .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isInternalServerError())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(jsonPath("$.status").value(ERROR_STATUS))
                 .andExpect(jsonPath("$.message").value(ErrorResponseStatusType.INTERNAL_SERVER_ERROR
                         .getMessage()))
@@ -200,7 +202,7 @@ class TuitionControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.delete(uri)
                         .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(jsonPath("$.status").value(SUCCESS_STATUS))
                 .andExpect(jsonPath("$.message").value(SuccessResponseStatusType.DELETE_TUITION.getMessage()))
                 .andExpect(jsonPath("$.statusCode").value(SuccessResponseStatusType.DELETE_TUITION.getCode()))
@@ -216,7 +218,7 @@ class TuitionControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.delete(uri)
                         .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(jsonPath("$.status").value(ERROR_STATUS))
                 .andExpect(jsonPath("$.message").value(ErrorResponseStatusType.TUITION_NOT_FOUND.getMessage()))
                 .andExpect(jsonPath("$.errorCode").value(ErrorResponseStatusType.TUITION_NOT_FOUND.getCode()))
@@ -234,7 +236,7 @@ class TuitionControllerTest {
                         .header(AUTH_HEADER, TOKEN)
                         .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isInternalServerError())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(jsonPath("$.status").value(ERROR_STATUS))
                 .andExpect(jsonPath("$.message").value(ErrorResponseStatusType.STUDENT_INTERNAL_SERVER_ERROR
                         .getMessage()))
@@ -254,7 +256,7 @@ class TuitionControllerTest {
                         .header(AUTH_HEADER, TOKEN)
                         .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isInternalServerError())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(jsonPath("$.status").value(ERROR_STATUS))
                 .andExpect(jsonPath("$.message").value(ErrorResponseStatusType.PAYMENT_INTERNAL_SERVER_ERROR
                         .getMessage()))
@@ -271,7 +273,7 @@ class TuitionControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.delete(uri)
                         .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isInternalServerError())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(jsonPath("$.status").value(ERROR_STATUS))
                 .andExpect(jsonPath("$.message").value(ErrorResponseStatusType.INTERNAL_SERVER_ERROR
                         .getMessage()))
@@ -291,7 +293,7 @@ class TuitionControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.get(GET_ALL_TUITION_URI)
                         .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(jsonPath("$.status").value(SUCCESS_STATUS))
                 .andExpect(jsonPath("$.message").value(SuccessResponseStatusType.RETURNED_ALL_TUITION
                         .getMessage()))
@@ -308,7 +310,7 @@ class TuitionControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.get(GET_ALL_TUITION_URI)
                         .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isInternalServerError())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(jsonPath("$.status").value(ERROR_STATUS))
                 .andExpect(jsonPath("$.message").value(ErrorResponseStatusType.INTERNAL_SERVER_ERROR
                         .getMessage()))
@@ -334,7 +336,7 @@ class TuitionControllerTest {
                         .header(AUTH_HEADER, TOKEN)
                         .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(jsonPath("$.status").value(SUCCESS_STATUS))
                 .andExpect(jsonPath("$.message").value(SuccessResponseStatusType.ADD_TUITION_STUDENT
                         .getMessage()))
@@ -357,7 +359,7 @@ class TuitionControllerTest {
                         .header(AUTH_HEADER, TOKEN)
                         .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(jsonPath("$.status").value(ERROR_STATUS))
                 .andExpect(jsonPath("$.message").value(ErrorResponseStatusType
                         .STUDENT_ALREADY_ENROLLED_IN_A_TUITION.getMessage()))
@@ -377,7 +379,7 @@ class TuitionControllerTest {
                         .header(AUTH_HEADER, TOKEN)
                         .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(jsonPath("$.status").value(ERROR_STATUS))
                 .andExpect(jsonPath("$.message").value(ErrorResponseStatusType.TUITION_NOT_FOUND.getMessage()))
                 .andExpect(jsonPath("$.errorCode").value(ErrorResponseStatusType.TUITION_NOT_FOUND.getCode()))
@@ -395,7 +397,7 @@ class TuitionControllerTest {
                         .header(AUTH_HEADER, TOKEN)
                         .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isInternalServerError())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(jsonPath("$.status").value(ERROR_STATUS))
                 .andExpect(jsonPath("$.message").value(ErrorResponseStatusType.STUDENT_INTERNAL_SERVER_ERROR
                         .getMessage()))
@@ -415,7 +417,7 @@ class TuitionControllerTest {
                         .header(AUTH_HEADER, TOKEN)
                         .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isInternalServerError())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(jsonPath("$.status").value(ERROR_STATUS))
                 .andExpect(jsonPath("$.message").value(ErrorResponseStatusType.INTERNAL_SERVER_ERROR
                         .getMessage()))
@@ -444,7 +446,7 @@ class TuitionControllerTest {
                         .header(AUTH_HEADER, TOKEN)
                         .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(jsonPath("$.status").value(SUCCESS_STATUS))
                 .andExpect(jsonPath("$.message").value(SuccessResponseStatusType.REMOVE_TUITION_STUDENT
                         .getMessage()))
@@ -465,7 +467,7 @@ class TuitionControllerTest {
                         .header(AUTH_HEADER, TOKEN)
                         .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(jsonPath("$.status").value(ERROR_STATUS))
                 .andExpect(jsonPath("$.message").value(ErrorResponseStatusType.STUDENT_NOT_ENROLLED_IN_TUITION
                         .getMessage()))
@@ -488,7 +490,7 @@ class TuitionControllerTest {
                         .header(AUTH_HEADER, TOKEN)
                         .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(jsonPath("$.status").value(ERROR_STATUS))
                 .andExpect(jsonPath("$.message").value(ErrorResponseStatusType.TUITION_NOT_FOUND
                         .getMessage()))
@@ -508,7 +510,7 @@ class TuitionControllerTest {
                         .header(AUTH_HEADER, TOKEN)
                         .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isInternalServerError())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(jsonPath("$.status").value(ERROR_STATUS))
                 .andExpect(jsonPath("$.message").value(ErrorResponseStatusType.STUDENT_INTERNAL_SERVER_ERROR
                         .getMessage()))
@@ -530,7 +532,7 @@ class TuitionControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.post(uri)
                         .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isInternalServerError())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(jsonPath("$.status").value(ERROR_STATUS))
                 .andExpect(jsonPath("$.message").value(ErrorResponseStatusType.INTERNAL_SERVER_ERROR
                         .getMessage()))
