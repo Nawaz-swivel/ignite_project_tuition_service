@@ -75,7 +75,7 @@ class TuitionControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.post(CREATE_TUITION_URI)
                         .content(getSampleTuitionCreateRequestDto().toJson())
                         .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
+                .andExpect(status().isCreated())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(jsonPath("$.status").value(SUCCESS_STATUS))
                 .andExpect(jsonPath("$.message").value(SuccessResponseStatusType.CREATE_TUITION.getMessage()))
@@ -201,7 +201,7 @@ class TuitionControllerTest {
         String uri = DELETE_TUITION_ID_URI.replace("{tuitionId}", TUITION_ID);
         mockMvc.perform(MockMvcRequestBuilders.delete(uri)
                         .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
+                .andExpect(status().is(202))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(jsonPath("$.status").value(SUCCESS_STATUS))
                 .andExpect(jsonPath("$.message").value(SuccessResponseStatusType.DELETE_TUITION.getMessage()))
