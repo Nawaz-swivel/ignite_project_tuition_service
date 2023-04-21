@@ -68,6 +68,6 @@ public class Controller {
     protected ResponseEntity<ResponseWrapper> getSuccessResponse(SuccessResponseStatusType status, ResponseDto data) {
         ResponseWrapper responseWrapper = new SuccessResponseWrapper(ResponseStatusType.SUCCESS, status.getMessage(),
                 data, SUCCESS_MESSAGE, status.getCode());
-        return new ResponseEntity<>(responseWrapper, HttpStatus.OK);
+        return new ResponseEntity<>(responseWrapper, HttpStatus.valueOf(status.getCode()));
     }
 }
