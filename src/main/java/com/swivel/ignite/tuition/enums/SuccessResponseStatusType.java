@@ -3,7 +3,7 @@ package com.swivel.ignite.tuition.enums;
 import lombok.Getter;
 
 /**
- * Enum values for Success Response
+ * Enum values for Success Responses
  */
 @Getter
 public enum SuccessResponseStatusType {
